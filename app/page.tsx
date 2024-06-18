@@ -1,23 +1,15 @@
 import { CreateRequest } from '@/components/CreateRequest';
+import { Hero } from '@/components/Hero';
+import { HeroCards } from '@/components/HeroCards';
+import { Navbar } from '@/components/Navbar';
 import { Button } from '@/components/ui/button';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 function Page() {
   return (
     <div>
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'flex-end',
-        padding: 12,
-      }}
-    >
-      <ConnectButton />
-
-    </div>
-    <div>
-      <CreateRequest />
-    </div>
+      <Navbar />
+  <Hero />
     </div>
   );
 }
