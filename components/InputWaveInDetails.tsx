@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CalendarDemo } from "@/components/CalendarDemo";
+import CreateRequestButton from "./CreateRequestButton";
 
 export function InputWaveInDetails() {
   const [payeeIdentity, setPayeeIdentity] = React.useState("");
@@ -120,9 +121,13 @@ export function InputWaveInDetails() {
        
         </form>
         <CardFooter className="flex justify-center">
-            <Button onClick={() => handleSubmit} className="w-full mt-4">
-              Create
-            </Button>
+         <CreateRequestButton
+            payeeIdentity={payeeIdentity}
+            payerIdentity={payerIdentity}
+            expectedAmount={expectedAmount}
+            dueDate={dueDate}
+            reason={reason}
+         />
           </CardFooter>
       </CardContent>
     </Card>
