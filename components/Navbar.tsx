@@ -28,11 +28,11 @@ interface RouteProps {
 
 const routeList: RouteProps[] = [
   {
-    href: "#features",
+    href: "/create-wavein",
     label: "Create Wavein",
   },
   {
-    href: "#testimonials",
+    href: "/dashboard",
     label: "Dashboard",
   },
 

@@ -6,7 +6,7 @@ export type generateRequestParamatersParams = {
     payerIdentity: string,
     expectedAmount: string,
     feeRecipient?: string,
-    tokenAddress: string,
+    tokenAddress?: string,
     dueDate: string,
     reason: string
 

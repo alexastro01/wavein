@@ -2,6 +2,7 @@ import { generateRequestParamatersParams } from "@/types/types";
 import { Types, Utils } from "@requestnetwork/request-client.js";
 import {IRequestCreateParameters} from "@/types/interfaces";
 import { SupportedNetwork } from "@/types/types";
+import { TOKEN_ADDRESS_SEPOLIA } from "./constants";
 
 // const payeeIdentity = '0x7eB023BFbAeE228de6DC5B92D0BeEB1eDb1Fd567';
 // const payerIdentity = '0x519145B771a6e450461af89980e5C17Ff6Fd8A92';
@@ -24,7 +25,7 @@ export function generateRequestParameters ({
           // The currency in which the request is denominated
           currency: {
             type: Types.RequestLogic.CURRENCY.ERC777,
-            value: tokenAddress,
+            value: tokenAddress || TOKEN_ADDRESS_SEPOLIA,
             network: 'sepolia',
           },
           
