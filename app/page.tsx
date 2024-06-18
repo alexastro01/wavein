@@ -1,11 +1,10 @@
+import { CreateRequest } from '@/components/CreateRequest';
 import { Button } from '@/components/ui/button';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 function Page() {
   return (
     <div>
-
- <Button>Click</Button>
     <div
       style={{
         display: 'flex',
@@ -15,6 +14,9 @@ function Page() {
     >
       <ConnectButton />
 
+    </div>
+    <div>
+      <CreateRequest />
     </div>
     </div>
   );
