@@ -23,7 +23,7 @@ export function generateRequestParameters({
       
       // The currency in which the request is denominated
       currency: {
-        type: Types.RequestLogic.CURRENCY.ERC777,
+        type: Types.RequestLogic.CURRENCY.ERC20,
         value: tokenAddress || TOKEN_ADDRESS_SEPOLIA,
         network: 'sepolia',
       },
@@ -52,9 +52,11 @@ export function generateRequestParameters({
     paymentNetwork: {
       id: Types.Extension.PAYMENT_NETWORK_ID.ERC777_STREAM,
       parameters: {
-        paymentNetworkName: 'sepolia',
-        paymentAddress: payeeIdentity,
-        
+        expectedFlowRate: '0x0000000000000000000000000000000000000001',
+        expectedStartDate: '0',
+        paymentAddress: '0x0000000000000000000000000000000000000002',
+        refundAddress: '0x0000000000000000000000000000000000000003',
+        salt: 'ea3bc7caf64110ca',
       },
     },
     
@@ -70,6 +72,8 @@ export function generateRequestParameters({
       type: Types.Identity.TYPE.ETHEREUM_ADDRESS,
       value: payeeIdentity,
     },
+
+    
     
 
 

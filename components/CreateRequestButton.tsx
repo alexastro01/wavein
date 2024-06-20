@@ -53,6 +53,8 @@ const CreateRequestButton = ({
     const confirmedRequestData = await request.waitForConfirmation();
 
     console.log(confirmedRequestData);
+
+    confirmedRequestData.extensions
     alert("Request confirmed successfully");
   };
 
