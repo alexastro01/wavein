@@ -15,14 +15,7 @@ const CreateRequestButton = ({
   reason,
 }: generateRequestParamatersParams) => {
   const { data: walletClient } = useWalletClient();
-  const web3SignatureProvider = new Web3SignatureProvider(walletClient || (window.ethereum as any));
 
-  const requestClient = new RequestNetwork({
-    nodeConnectionConfig: {
-      baseURL: "https://sepolia.gateway.request.network/",
-    },
-    signatureProvider: web3SignatureProvider,
-  });
 
   const handleClick = async () => {
     if (
@@ -35,6 +28,14 @@ const CreateRequestButton = ({
       alert("Please fill in all the fields");
       return;
     }
+    const web3SignatureProvider = new Web3SignatureProvider(walletClient || (window.ethereum as any));
+
+    const requestClient = new RequestNetwork({
+      nodeConnectionConfig: {
+        baseURL: "https://sepolia.gateway.request.network/",
+      },
+      signatureProvider: web3SignatureProvider,
+    });
 
     const requestParameters = generateRequestParameters({
       payeeIdentity,
