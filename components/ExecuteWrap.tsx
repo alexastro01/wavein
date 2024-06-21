@@ -53,10 +53,13 @@ const ExecuteWrap = ({
         to USDCx
       </div>
       <DialogFooter>
-        
+      <Button className="w-full" onClick={setFlowrate} disabled={isConfirming}>{isConfirming ? 
+   "Loading..." 
+   : "Approve" }</Button>
         <Button className="w-full" onClick={setFlowrate} disabled={isConfirming}>{isConfirming ? 
    "Loading..." 
    : "Wrap" }</Button>
+  
       </DialogFooter>
     </div>
   );
