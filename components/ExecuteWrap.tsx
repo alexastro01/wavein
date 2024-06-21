@@ -3,8 +3,9 @@ import { DialogFooter } from "./ui/dialog";
 import { Button } from "./ui/button";
 import Image from "next/image";
 import { useAccount, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
-import { flowSenderAbi } from "@/abi/Flowsender";
+import { usdcxAbi } from "@/abi/USDCx";
 import { parseEther } from "viem";
+import { USDCX_CONTRACT_ADDRESS_SEPOLIA } from "@/utils/constants";
 
 type ExecuteWrapProps = {
     setStep: React.Dispatch<React.SetStateAction<number>>;
@@ -20,11 +21,11 @@ const ExecuteWrap = ({
     async function setFlowrate() {
     
       writeContract({
-        address: "0x88ab63a8726EB0E475c3D84505898F8e70c051ee",
-        abi: flowSenderAbi,
-        functionName: "gainUsdcX",
+        address: USDCX_CONTRACT_ADDRESS_SEPOLIA,
+        abi: usdcxAbi,
+        functionName: "upgrade",
         //msg.sender
-        args: []
+        args: [parseEther("10")]
       });
     }
 

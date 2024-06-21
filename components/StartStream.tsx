@@ -1,14 +1,15 @@
 "use client";
 
 
-import React, { useEffect } from "react";
-import { useWaitForTransactionReceipt, useWriteContract } from "wagmi";
-import { flowSenderAbi } from "@/abi/Flowsender";
+import React, { use, useEffect } from "react";
+import { useAccount, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import { CFAv1ForwarderAbi } from "@/abi/CFAv1Forwarder";
 import { Button } from "@/components/ui/button";
 import { parseEther } from "viem";
 import Image from "next/image";
 import { DialogFooter } from "./ui/dialog";
 import Address from "./Address";
+import { CFAv1Forwarder_CONTRACT_ADDRESS_SEPOLIA, USDCX_CONTRACT_ADDRESS_SEPOLIA } from "@/utils/constants";
 
 type StartStreamProps = {
   setStep: React.Dispatch<React.SetStateAction<number>>;
@@ -19,18 +20,26 @@ const StartStream = ({
   setStep
 }: StartStreamProps) => {
   const { data: hash, writeContract, error } = useWriteContract();
-
+  const {address} = useAccount();
   async function setFlowrate() {
   
     writeContract({
       //contract address
-      address: "0x88ab63a8726EB0E475c3D84505898F8e70c051ee",
-      abi: flowSenderAbi,
-      functionName: "createStream",
+      address: CFAv1Forwarder_CONTRACT_ADDRESS_SEPOLIA,
+      abi: CFAv1ForwarderAbi,
+      functionName: "createFlow",
       //flowrate, receiver
       args: [
-        parseEther("0.0000000001"),
-        "0x3C7fBd61f260C19602990817C005132d241f24b6"     
+        //CONTRACT ADDRESS USDCX
+        USDCX_CONTRACT_ADDRESS_SEPOLIA,
+        //SENDER
+        address as `0x${string}`,
+        //RECEIVER
+        "0x8213a051030812c7c9F286269154756Aa19857B0",
+        //FLOR RATE ( INT / SECOND )
+        parseEther("0.0000001"),
+        //OPTIONAL BYTES
+        "0x"
       ],
     });
 
