@@ -1,5 +1,6 @@
 "use client";
 
+import Image from 'next/image';
 import React, { useEffect, useState, useMemo, memo } from 'react';
 import { formatEther } from 'viem';
 
@@ -110,10 +111,13 @@ const FlowingBalance: React.FC<{
   );
 
   return (
-    <div className="flowing-balance">
+    <div className="flowing-balance flex text-lg">
+      <Image src="/usdc.png" width={30} height={30} alt="USDC" className=''/>
+      <p className='ml-2 '>
     {decimalPlaces !== undefined
       ? toFixedUsingString(formatEther(flowingBalance), decimalPlaces)
       : formatEther(flowingBalance)}
+      </p>
   </div>
   );
 });
