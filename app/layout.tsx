@@ -3,6 +3,7 @@ import "@rainbow-me/rainbowkit/styles.css";
 import { Providers } from "./providers";
 import { Inter as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/toaster";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -19,7 +20,12 @@ function RootLayout({ children }: { children: React.ReactNode }) {
           fontSans.variable
         )}
       >
-        <Providers>{children}</Providers>
+        <Providers>
+          <main>
+          {children}
+          <Toaster />
+          </main>
+          </Providers>
       </body>
     </html>
   );

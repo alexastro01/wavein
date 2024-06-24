@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { generateRequestParameters } from "@/utils/generateRequestParamaters";
 import { generateRequestParamatersParams } from "@/types/types";
@@ -8,18 +8,32 @@ import { Web3SignatureProvider } from "@requestnetwork/web3-signature";
 import { RequestNetwork } from "@requestnetwork/request-client.js";
 import { calculateUSDCPerSecond } from "@/utils/getUSDCperSecond";
 import { parseEther } from "viem";
+import { useToast } from "./ui/use-toast";
+
+
 const CreateRequestButton = ({
   payeeIdentity,
   payerIdentity,
   expectedAmount,
   dueDate,
   reason,
-  expectedFlowRate
-}: generateRequestParamatersParams) => {
+  expectedFlowRate,
+  setLinkState,
+  setIsConfirmed
+}: generateRequestParamatersParams & {
+   setLinkState: React.Dispatch<React.SetStateAction<string>>,
+   setIsConfirmed:React.Dispatch<React.SetStateAction<boolean>>
+}) => {
   const { data: walletClient } = useWalletClient();
+
+  const { toast } = useToast()
+
+  const [loading, setLoading] = useState(false);
 
 
   const handleClick = async () => {
+
+    setLoading(true)
     if (
       !payeeIdentity ||
       !payerIdentity ||
@@ -30,6 +44,8 @@ const CreateRequestButton = ({
       alert("Please fill in all the fields");
       return;
     }
+
+    try{
     const web3SignatureProvider = new Web3SignatureProvider(walletClient || (window.ethereum as any));
 
     const requestClient = new RequestNetwork({
@@ -55,16 +71,46 @@ const CreateRequestButton = ({
     });
 
     console.log("Request Parameters:", requestParameters);
+    toast({
+      variant: "success",
+      title: "1/3",
+      description: "Creating Request...",
+
+    })
+
 
     const request = await requestClient.createRequest(requestParameters);
-    alert("Request created successfully");
+    toast({
+      variant: "success",
+      title: "2/3",
+      description: "Request Created Sucessfully ! Confirming Request...",
+
+    })
+
 
     const confirmedRequestData = await request.waitForConfirmation();
+    toast({
+      variant: "primary",
+      title: "3/3",
+      description: "Request Confirmed",
 
-    console.log(confirmedRequestData);
+    })
 
-    confirmedRequestData.extensions
-    alert("Request confirmed successfully");
+    console.log(confirmedRequestData.requestId);
+      
+    setLinkState(`http://localhost:3000/confirm-wavein/${confirmedRequestData.requestId}`)
+    setIsConfirmed(true)
+
+
+    toast({
+      description: "Request Created Successfully",
+    })
+
+  } catch(error) {
+    alert(error)
+  } finally {
+    setLoading(false)
+  }
   };
 
 
@@ -73,8 +119,10 @@ const CreateRequestButton = ({
   }, [dueDate])
 
   return (
-    <Button onClick={handleClick} className="w-full mt-4">
-      Create
+    <Button onClick={handleClick} className="w-full mt-4" disabled={loading}>
+      {
+      loading ? "Loading..." : "Create"
+      }
     </Button>
   );
 };

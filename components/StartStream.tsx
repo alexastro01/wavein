@@ -12,6 +12,7 @@ import Address from "./Address";
 import { CFAv1Forwarder_CONTRACT_ADDRESS_SEPOLIA, USDCX_CONTRACT_ADDRESS_SEPOLIA } from "@/utils/constants";
 
 type StartStreamProps = {
+  
   setStep: React.Dispatch<React.SetStateAction<number>>;
 }
 

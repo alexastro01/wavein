@@ -3,7 +3,7 @@ import { Navbar } from "@/components/Navbar";
 import WaveInView from "@/components/WaveInView";
 import React from "react";
 
-const Wavein = () => {
+export default function Page({ params }: { params: { slug: string } }) {
   return (
     <div>
       <Navbar />
@@ -12,4 +12,4 @@ const Wavein = () => {
   );
 };
 
-export default Wavein;
+
