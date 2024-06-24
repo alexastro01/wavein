@@ -2,12 +2,13 @@ import { generateRequestParamatersParams } from "@/types/types";
 import { Types, Utils } from "@requestnetwork/request-client.js";
 import {IRequestCreateParameters} from "@/types/interfaces";
 import { SupportedNetwork } from "@/types/types";
-import { TOKEN_ADDRESS_SEPOLIA } from "./constants";
+import { TOKEN_ADDRESS_SEPOLIA, USDCX_CONTRACT_ADDRESS_SEPOLIA } from "./constants";
 import { ICreateRequestParameters } from "@requestnetwork/request-client.js/dist/types";
 // const payeeIdentity = '0x7eB023BFbAeE228de6DC5B92D0BeEB1eDb1Fd567';
 // const payerIdentity = '0x519145B771a6e450461af89980e5C17Ff6Fd8A92';
 // const paymentRecipient = payeeIdentity;
 // const feeRecipient = '0x0000000000000000000000000000000000000000';
+
 
 
 export function generateRequestParameters({
@@ -17,14 +18,15 @@ export function generateRequestParameters({
   tokenAddress,
   dueDate,
   reason,
-}: generateRequestParamatersParams): ICreateRequestParameters {
+  expectedFlowRate
+}: generateRequestParamatersParams): ICreateRequestParameters  {
   const requestCreateParameters: ICreateRequestParameters = {
     requestInfo: {
       
       // The currency in which the request is denominated
       currency: {
-        type: Types.RequestLogic.CURRENCY.ERC20,
-        value: tokenAddress || TOKEN_ADDRESS_SEPOLIA,
+        type: Types.RequestLogic.CURRENCY.ERC777,
+        value: tokenAddress || USDCX_CONTRACT_ADDRESS_SEPOLIA,
         network: 'sepolia',
       },
       
@@ -52,9 +54,11 @@ export function generateRequestParameters({
     paymentNetwork: {
       id: Types.Extension.PAYMENT_NETWORK_ID.ERC777_STREAM,
       parameters: {
-        expectedFlowRate: '0x0000000000000000000000000000000000000001',
-        expectedStartDate: '0',
-        paymentAddress: '0x0000000000000000000000000000000000000002',
+
+        //INT / SECOND
+        expectedFlowRate: expectedFlowRate,
+        expectedStartDate: Date.now().toString(),
+        paymentAddress: payeeIdentity,
         refundAddress: '0x0000000000000000000000000000000000000003',
         salt: 'ea3bc7caf64110ca',
       },

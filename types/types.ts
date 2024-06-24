@@ -7,7 +7,8 @@ export type generateRequestParamatersParams = {
     expectedAmount: string,
     feeRecipient?: string,
     tokenAddress?: string,
-    dueDate: string,
-    reason: string
+    dueDate: string | Date | number,
+    reason: string,
+    expectedFlowRate: string
 
 }

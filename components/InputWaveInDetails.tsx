@@ -127,6 +127,7 @@ export function InputWaveInDetails() {
             expectedAmount={expectedAmount}
             dueDate={dueDate}
             reason={reason}
+            expectedFlowRate="1"
          />
           </CardFooter>
       </CardContent>
