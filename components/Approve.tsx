@@ -9,7 +9,11 @@ import { parseEther } from "viem";
 import { USDC_CONTRACT_ADDRESS_SEPOLIA, USDCX_CONTRACT_ADDRESS_SEPOLIA } from "@/utils/constants";
 import { writeContract } from "viem/actions";
 
-const Approve = () => {
+type ApproveProps = {
+    expectedAmount: string | number
+}
+
+const Approve = ({expectedAmount}: ApproveProps) => {
     const { data: hash, writeContract, error, isSuccess, isPending } = useWriteContract();
 
     const { isLoading, isSuccess: isConfirmed } =
@@ -27,7 +31,7 @@ const Approve = () => {
             abi: usdcAbi,
             functionName: "approve",
             //msg.sender
-            args: [USDCX_CONTRACT_ADDRESS_SEPOLIA, parseEther("10000")]
+            args: [USDCX_CONTRACT_ADDRESS_SEPOLIA, parseEther(expectedAmount.toString())]
         });
     }
 

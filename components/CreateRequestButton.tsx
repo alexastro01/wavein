@@ -33,9 +33,8 @@ const CreateRequestButton = ({
 
   const handleClick = async () => {
 
-    setLoading(true)
     if (
-      !payeeIdentity ||
+
       !payerIdentity ||
       !expectedAmount ||
       !dueDate ||
@@ -44,9 +43,11 @@ const CreateRequestButton = ({
       alert("Please fill in all the fields");
       return;
     }
+    
+    setLoading(true)
 
     try{
-    const web3SignatureProvider = new Web3SignatureProvider(walletClient || (window.ethereum as any));
+    const web3SignatureProvider = new Web3SignatureProvider(walletClient);
 
     const requestClient = new RequestNetwork({
       nodeConnectionConfig: {

@@ -1,8 +1,25 @@
+
+
 import React from 'react'
 import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from './ui/dialog'
 import Link from 'next/link'
+import { ClipboardCopyIcon } from "@radix-ui/react-icons";
+import { Button } from './ui/button';
 
-function StreamSuccess() {
+type StreamSuccessType ={
+  requestId: string
+}
+
+function StreamSuccess({
+  requestId
+}: StreamSuccessType) {
+
+
+
+
+
+
+
   return (
     <div>
    <DialogContent className="sm:max-w-[425px]">
@@ -17,13 +34,11 @@ function StreamSuccess() {
           <DialogDescription>
            Successfully started the stream
           </DialogDescription>
-          <p className="text-xl font-semibold">
-          You can view the stream here : 
-          </p>
-          <Link href="https://flowscan.org/stream/0x404CE8cb8cEC051d2Ef416D97E8d72D466Cb55dE">
-          <span className="inline bg-gradient-to-r from-[#54d6fa] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text font-bold text-xl underline">
-             https://wavein.io/stream/streamid
-            </span>{" "}
+  
+          <Link href={`http://localhost:3000/stream/${requestId}`} className='flex justify-center mt-4 py-8'>
+          <Button  className=" font-bold text-xl " size={"lg"}>
+             Go To Stream
+            </Button>{" "}
           </Link>
         </DialogHeader>
       </DialogContent>
@@ -31,5 +46,6 @@ function StreamSuccess() {
     </div>
   )
 }
+
 
 export default StreamSuccess

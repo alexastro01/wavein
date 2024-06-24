@@ -12,13 +12,18 @@ import Address from "./Address";
 import { CFAv1Forwarder_CONTRACT_ADDRESS_SEPOLIA, USDCX_CONTRACT_ADDRESS_SEPOLIA } from "@/utils/constants";
 
 type StartStreamProps = {
-  
+  payee: string,
+  expectedAmount: string | number,
+  expectedFlowRate: string,
   setStep: React.Dispatch<React.SetStateAction<number>>;
 }
 
 
 const StartStream = ({
-  setStep
+  setStep,
+  expectedAmount,
+  payee,
+  expectedFlowRate
 }: StartStreamProps) => {
   const { data: hash, writeContract, error } = useWriteContract();
   const {address} = useAccount();
@@ -36,9 +41,9 @@ const StartStream = ({
         //SENDER
         address as `0x${string}`,
         //RECEIVER
-        "0x8213a051030812c7c9F286269154756Aa19857B0",
-        //FLOR RATE ( INT / SECOND )
-        parseEther("0.0000001"),
+        payee as `0x${string}`,
+        //FLOW RATE ( INT / SECOND )
+        BigInt(expectedFlowRate),
         //OPTIONAL BYTES
         "0x"
       ],
@@ -65,8 +70,10 @@ const StartStream = ({
   return (
     <div className="">
     <div className=" text-xl font-semibold mb-4">
-      Stream 500
-      USDCX to <Address address={"0x8213a051030812c7c9F286269154756Aa19857B0"} size="medium" />
+      Stream {expectedAmount}{
+        " "
+      }
+      USDCX to <Address address={payee} size="medium" />
     </div>
     <DialogFooter>
       

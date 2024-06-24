@@ -16,11 +16,16 @@ import { CalendarDemo } from "@/components/CalendarDemo";
 import CreateRequestButton from "./CreateRequestButton";
 import Link from "next/link";
 import { ClipboardCopyIcon } from "@radix-ui/react-icons";
+import { useAccount } from "wagmi";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 
 
 export function InputWaveInDetails() {
-  const [payeeIdentity, setPayeeIdentity] = React.useState("");
+  
+  const {address} = useAccount()
+
+  // const [payeeIdentity, setPayeeIdentity] = React.useState(address);
   const [payerIdentity, setPayerIdentity] = React.useState("");
   const [expectedAmount, setExpectedAmount] = React.useState("");
   const [dueDate, setDueDate] = React.useState("");
@@ -30,11 +35,11 @@ export function InputWaveInDetails() {
   const [copySuccess, setCopySuccess] = React.useState('');
 
 
-  const handlePayeeIdentityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    console.log("Payee Identity changed:", value);
-    setPayeeIdentity(value);
-  };
+  // const handlePayeeIdentityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const value = event.target.value;
+  //   console.log("Payee Identity changed:", value);
+  //   setPayeeIdentity(value);
+  // };
 
   const handlePayerIdentityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -57,7 +62,6 @@ export function InputWaveInDetails() {
   const handleSubmit = (event: React.FormEvent<HTMLInputElement>) => {
     event.preventDefault();
     console.log("Form submitted with state values:", {
-      payeeIdentity,
       payerIdentity,
       expectedAmount,
       dueDate,
@@ -88,15 +92,10 @@ export function InputWaveInDetails() {
           <form onSubmit={handleSubmit as any}>
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="payeeIdentity">
-                  Address to receive the funds to...
+                <Label >
+                  Address to receive the funds
                 </Label>
-                <Input
-                  id="payeeIdentity"
-                  placeholder="Address to send the payment to"
-                  value={payeeIdentity}
-                  onChange={handlePayeeIdentityChange}
-                />
+                  <ConnectButton />
               </div>
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="payerIdentity">
@@ -137,7 +136,7 @@ export function InputWaveInDetails() {
           </form>
           <CardFooter className="flex justify-center">
             <CreateRequestButton
-              payeeIdentity={payeeIdentity}
+              payeeIdentity={address as string}
               payerIdentity={payerIdentity}
               expectedAmount={expectedAmount}
               dueDate={dueDate}

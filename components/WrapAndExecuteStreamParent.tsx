@@ -24,7 +24,8 @@ const WrapAndExecuteStreamParent = ({
     payee,
     expectedAmount,
     requestId,
-    currencyAddress
+    currencyAddress,
+    expectedFlowRate
 }: WrapAndExecuteStreamParentProps & WaveInConfirmationData) => {
 
 
@@ -47,8 +48,8 @@ const WrapAndExecuteStreamParent = ({
           )}
         </DialogDescription>
       </DialogHeader>
-      {step === 0 && <ExecuteWrap setStep={setStep} />}
-      {step === 1 && <StartStream setStep={setStep} />}
+      {step === 0 && <ExecuteWrap setStep={setStep} expectedAmount={expectedAmount} />}
+      {step === 1 && <StartStream setStep={setStep} expectedAmount={expectedAmount} payee={payee} expectedFlowRate={expectedFlowRate} />}
     </DialogContent>
   );
 };

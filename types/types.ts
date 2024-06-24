@@ -20,5 +20,6 @@ export type WaveInConfirmationData = {
     payer: string
     currencyAddress: string,
     expectedAmount: string | number,
-    requestId: string
+    requestId: string,
+    expectedFlowRate: string
 }

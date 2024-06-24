@@ -10,10 +10,12 @@ import Approve from "./Approve";
 
 type ExecuteWrapProps = {
     setStep: React.Dispatch<React.SetStateAction<number>>;
+    expectedAmount: string | number
 }
 
 const ExecuteWrap = ({
-    setStep
+    setStep,
+    expectedAmount
 }: ExecuteWrapProps) => {
 
     const { data: hash, writeContract, error, isSuccess, isPending } = useWriteContract();
@@ -26,7 +28,7 @@ const ExecuteWrap = ({
         abi: usdcxAbi,
         functionName: "upgrade",
         //msg.sender
-        args: [parseEther("10")]
+        args: [parseEther(expectedAmount.toString())]
       });
     }
 
@@ -50,14 +52,14 @@ const ExecuteWrap = ({
   return (
     <div className="">
       <div className="flex text-xl font-semibold mb-4">
-        Wrap 500{" "}
+        Wrap {expectedAmount}{" "}
         <span className="mx-1">
           <Image src="/usdc.png" width={30} height={30} alt="USDC" />{" "}
         </span>{" "}
         to USDCx
       </div>
       <DialogFooter>
-        <Approve />
+        <Approve expectedAmount={expectedAmount} />
         <Button className="w-full" onClick={setFlowrate} disabled={isConfirming}>{isConfirming ? 
    "Loading..." 
    : "Wrap" }</Button>

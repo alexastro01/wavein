@@ -25,7 +25,8 @@ export function ExecuteStreamDialog({
   payee,
   expectedAmount,
   requestId,
-  currencyAddress
+  currencyAddress,
+  expectedFlowRate
 }: WaveInConfirmationData) {
   const [step, setStep] = useState(0);
 
@@ -34,7 +35,7 @@ export function ExecuteStreamDialog({
       <DialogTrigger asChild>
         <Button className="w-full">Proceed</Button>
       </DialogTrigger>
-      {step === 2 ? <StreamSuccess /> : <WrapAndExecuteStreamParent step={step} setStep={setStep}
+      {step === 2 ? <StreamSuccess requestId={requestId} /> : <WrapAndExecuteStreamParent step={step} setStep={setStep}
         dueDate={dueDate}
         reason={reason}
         payer={payer}
@@ -42,6 +43,7 @@ export function ExecuteStreamDialog({
         expectedAmount={expectedAmount}
         requestId={requestId}
         currencyAddress={currencyAddress}
+        expectedFlowRate={expectedFlowRate}
       />}
     </Dialog>
   );

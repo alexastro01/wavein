@@ -29,7 +29,8 @@ export function ConfirmWaveInCard({
   payee,
   expectedAmount,
   requestId,
-  currencyAddress
+  currencyAddress,
+  expectedFlowRate
 }: WaveInConfirmationData ) {
 
 
@@ -65,6 +66,7 @@ export function ConfirmWaveInCard({
            expectedAmount={expectedAmount}
            requestId={requestId}
            currencyAddress={currencyAddress}
+           expectedFlowRate={expectedFlowRate}
         />
       </CardFooter>
     </Card>
