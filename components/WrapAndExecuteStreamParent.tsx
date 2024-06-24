@@ -8,6 +8,7 @@ import {
 } from "./ui/dialog";
 import ExecuteWrap from "./ExecuteWrap";
 import StartStream from "./StartStream";
+import { WaveInConfirmationData } from "@/types/types";
 
 
 type WrapAndExecuteStreamParentProps = { 
@@ -16,8 +17,15 @@ setStep:React.Dispatch<React.SetStateAction<number>>;
 }
 
 const WrapAndExecuteStreamParent = ({
-    step, setStep
-}: WrapAndExecuteStreamParentProps) => {
+    step, setStep, 
+    dueDate,
+    reason,
+    payer,
+    payee,
+    expectedAmount,
+    requestId,
+    currencyAddress
+}: WrapAndExecuteStreamParentProps & WaveInConfirmationData) => {
 
 
   return (

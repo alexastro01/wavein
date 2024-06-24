@@ -20,8 +20,19 @@ import {
 } from "@/components/ui/select"
 import Address from "./Address"
 import { ExecuteStreamDialog } from "./ExecuteStreamDialog"
+import { WaveInConfirmationData } from "@/types/types"
  
-export function ConfirmWaveInCard() {
+export function ConfirmWaveInCard({
+  dueDate,
+  reason,
+  payer,
+  payee,
+  expectedAmount,
+  requestId,
+  currencyAddress
+}: WaveInConfirmationData ) {
+
+
 
    const labelClassName ="text-sm font-semibold text-gray-500"
    const mainTextClassName = "text-lg font-semibold text-gray-800"
@@ -35,18 +46,26 @@ export function ConfirmWaveInCard() {
       <CardContent>
         <div className="grid w-full items-center gap-2">
        <p className={labelClassName}>Receiver</p>
-       <Address address={"0x909957dcc1B114Fe262F4779e6aeD4d034D96B0f"} size="large" />
+       <Address address={payee} size="large" />
        <p className={labelClassName}>Amount</p>
-       <p className={mainTextClassName}>500 USDC</p>
+       <p className={mainTextClassName}>{expectedAmount} USDC</p>
        <p className={labelClassName}>Reason</p>
-       <p className={mainTextClassName}>Contract work</p>
+       <p className={mainTextClassName}>{reason}</p>
        <p className={labelClassName}>Due Date</p>
-       <p className={mainTextClassName}>2024-12-12</p>
+       <p className={mainTextClassName}>{dueDate}</p>
        </div>
       </CardContent>
       <CardFooter className="flex justify-between p-4">
        
-        <ExecuteStreamDialog />
+        <ExecuteStreamDialog
+           dueDate={dueDate}
+           reason={reason}
+           payer={payer}
+           payee={payee}
+           expectedAmount={expectedAmount}
+           requestId={requestId}
+           currencyAddress={currencyAddress}
+        />
       </CardFooter>
     </Card>
   )

@@ -16,8 +16,17 @@ import ExecuteWrap from "./ExecuteWrap";
 import StartStream from "./StartStream";
 import StreamSuccess from "./StreamSuccess";
 import WrapAndExecuteStreamParent from "./WrapAndExecuteStreamParent";
+import { WaveInConfirmationData } from "@/types/types";
 
-export function ExecuteStreamDialog() {
+export function ExecuteStreamDialog({
+  dueDate,
+  reason,
+  payer,
+  payee,
+  expectedAmount,
+  requestId,
+  currencyAddress
+}: WaveInConfirmationData) {
   const [step, setStep] = useState(0);
 
   return (
@@ -25,7 +34,15 @@ export function ExecuteStreamDialog() {
       <DialogTrigger asChild>
         <Button className="w-full">Proceed</Button>
       </DialogTrigger>
-      {step === 2 ? <StreamSuccess /> : <WrapAndExecuteStreamParent step={step} setStep={setStep} />}
+      {step === 2 ? <StreamSuccess /> : <WrapAndExecuteStreamParent step={step} setStep={setStep}
+        dueDate={dueDate}
+        reason={reason}
+        payer={payer}
+        payee={payee}
+        expectedAmount={expectedAmount}
+        requestId={requestId}
+        currencyAddress={currencyAddress}
+      />}
     </Dialog>
   );
 }

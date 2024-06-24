@@ -12,3 +12,13 @@ export type generateRequestParamatersParams = {
     expectedFlowRate: string
 
 }
+
+export type WaveInConfirmationData = {
+    dueDate: string,
+    reason: string,
+    payee: string,
+    payer: string
+    currencyAddress: string,
+    expectedAmount: string | number,
+    requestId: string
+}
