@@ -65,7 +65,7 @@ const StartStream = ({
     <div className="">
     <div className=" text-xl font-semibold mb-4">
       Stream 500
-      USDCX to <Address address={"0x3C7fBd61f260C19602990817C005132d241f24b6"} size="medium" />
+      USDCX to <Address address={"0x8213a051030812c7c9F286269154756Aa19857B0"} size="medium" />
     </div>
     <DialogFooter>
       

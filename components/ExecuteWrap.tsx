@@ -6,6 +6,7 @@ import { useAccount, useWaitForTransactionReceipt, useWriteContract } from "wagm
 import { usdcxAbi } from "@/abi/USDCx";
 import { parseEther } from "viem";
 import { USDCX_CONTRACT_ADDRESS_SEPOLIA } from "@/utils/constants";
+import Approve from "./Approve";
 
 type ExecuteWrapProps = {
     setStep: React.Dispatch<React.SetStateAction<number>>;
@@ -29,6 +30,8 @@ const ExecuteWrap = ({
       });
     }
 
+
+
     const { isLoading: isConfirming, isSuccess: isConfirmed } =
     useWaitForTransactionReceipt({
       hash,
@@ -37,6 +40,7 @@ const ExecuteWrap = ({
 
     useEffect(() => {
     error && alert(error.message)
+    error && console.log(error.message)
     }, [error])
 
     useEffect(() => {
@@ -53,9 +57,7 @@ const ExecuteWrap = ({
         to USDCx
       </div>
       <DialogFooter>
-      <Button className="w-full" onClick={setFlowrate} disabled={isConfirming}>{isConfirming ? 
-   "Loading..." 
-   : "Approve" }</Button>
+        <Approve />
         <Button className="w-full" onClick={setFlowrate} disabled={isConfirming}>{isConfirming ? 
    "Loading..." 
    : "Wrap" }</Button>
