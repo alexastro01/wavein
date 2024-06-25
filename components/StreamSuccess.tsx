@@ -35,7 +35,7 @@ function StreamSuccess({
            Successfully started the stream
           </DialogDescription>
   
-          <Link href={`http://localhost:3000/stream/${requestId}`} className='flex justify-center mt-4 py-8'>
+          <Link href={`http://localhost:3000/wavein/${requestId}`} className='flex justify-center mt-4 py-8'>
           <Button  className=" font-bold text-xl " size={"lg"}>
              Go To Stream
             </Button>{" "}

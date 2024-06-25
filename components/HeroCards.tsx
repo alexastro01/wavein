@@ -46,7 +46,7 @@ export const HeroCards = () => {
           </div>
         </CardHeader>
 
-        <CardContent>Sure, you will receive 500 usd during this month ! Happy we can work together  <span className="inline bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text font-bold">wavein.io/stream/id</span> </CardContent>
+        <CardContent>Sure, you will receive 500 usd during this month ! Happy we can work together  <span className="inline bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text font-bold">wavein.io/wavein/id</span> </CardContent>
       </Card>
 
 </div>

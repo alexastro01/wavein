@@ -23,3 +23,15 @@ export type WaveInConfirmationData = {
     requestId: string,
     expectedFlowRate: string
 }
+
+
+export type WaveInData = {
+    dueDate: string,
+    reason: string,
+    payee: string,
+    payer: string
+    currencyAddress: string,
+    expectedAmount: string | number,
+    requestId: string,
+    expectedFlowRate: string
+}

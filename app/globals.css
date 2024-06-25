@@ -74,6 +74,21 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555; /* Darker color when hovering */
 }
+@keyframes gradient-x {
+  0% {
+    background-position: 200% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-x {
+  background: linear-gradient(90deg, rgba(59, 130, 246, 0.2), rgba(59, 130, 246, 1), rgba(59, 130, 246, 0.2));
+  background-size: 200% 100%;
+  animation: gradient-x 4s linear infinite;
+}
+
 
   @layer base {
     * {

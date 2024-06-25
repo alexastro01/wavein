@@ -73,7 +73,7 @@ const CreateRequestButton = ({
 
     console.log("Request Parameters:", requestParameters);
     toast({
-      variant: "success",
+      variant: "default",
       title: "1/3",
       description: "Creating Request...",
 
@@ -82,7 +82,7 @@ const CreateRequestButton = ({
 
     const request = await requestClient.createRequest(requestParameters);
     toast({
-      variant: "success",
+      variant: "default",
       title: "2/3",
       description: "Request Created Sucessfully ! Confirming Request...",
 
@@ -91,7 +91,7 @@ const CreateRequestButton = ({
 
     const confirmedRequestData = await request.waitForConfirmation();
     toast({
-      variant: "primary",
+      variant: "default",
       title: "3/3",
       description: "Request Confirmed",
 
