@@ -30,16 +30,14 @@ export function WaveInDetailsDialog({
     expectedFlowRate
 }: WaveInData) {
   return (
-    <Dialog>
+    <Dialog >
       <DialogTrigger asChild>
         <Button variant="outline">Details</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
-      <Card className="w-full max-w-2xl">
-        <CardHeader>
-          <CardTitle>Transaction Details</CardTitle>
-        </CardHeader>
-        <CardContent className="text-center space-y-2">
+      <DialogHeader>
+        <DialogTitle>Wavein Details</DialogTitle>
+      </DialogHeader>
           <p>
             <strong>Due Date:</strong> {dueDate}
           </p>
@@ -59,8 +57,7 @@ export function WaveInDetailsDialog({
           <p>
             <strong>Request ID:</strong> {requestId}
           </p>
-        </CardContent>
-      </Card>
+    
         <DialogFooter>
           <Button type="submit">Save changes</Button>
         </DialogFooter>

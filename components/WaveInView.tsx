@@ -15,6 +15,10 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { WaveInDetailsDialog } from "./WaveInDetailsDialog";
+import { WaveInDetailsDrawer } from "./WaveInDetailsDrawer";
+import { useReadContract } from "wagmi";
+import { usdcxAbi } from "@/abi/USDCx";
+import { USDCX_CONTRACT_ADDRESS_SEPOLIA } from "@/utils/constants";
 
 const WaveInView = ({
   dueDate,
@@ -26,6 +30,14 @@ const WaveInView = ({
   currencyAddress,
   expectedFlowRate,
 }: WaveInData) => {
+
+  const { data: balance } = useReadContract({
+    address: USDCX_CONTRACT_ADDRESS_SEPOLIA as `0x${string}`,
+    abi: usdcxAbi,
+    functionName: 'balanceOf',
+    args: [payee as `0x${string}`],
+  })
+
   return (
     <div className="flex flex-col items-center p-4 mt-8 space-y-4">
       <Card className="w-full max-w-2xl">
@@ -43,7 +55,7 @@ const WaveInView = ({
         <AddressStreamingCard address={payee} receiver={true} />
       </div>
       
-      <WaveInDetailsDialog
+      <WaveInDetailsDrawer 
         dueDate={dueDate}
         expectedAmount={expectedAmount}
         requestId={requestId}
@@ -52,6 +64,7 @@ const WaveInView = ({
         reason={reason}
         payee={payee}
         payer={payer}
+        balance={balance as bigint}
       />
      
     </div>
