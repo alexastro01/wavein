@@ -92,6 +92,7 @@ const StartStream = ({
 
   useEffect(() => {
     error && alert(error.message)
+    error && console.error(error.message)
     }, [error])
 
     useEffect(() => {

@@ -1,4 +1,8 @@
-import { PDFDocument, rgb } from 'pdf-lib';
+import { RequestNetwork } from '@requestnetwork/request-client.js';
+import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
+
+// Helper function to interpolate between two colors
+
 
 type Payment = {
   date: string;
@@ -6,132 +10,163 @@ type Payment = {
 };
 
 type generatePdfParams = {
-  dueDate: string;
-  reason: string;
-  payer: string;
-  payee: string;
-  expectedAmount: number;
   requestId: string;
-  declaredPaymentsSent?: Payment[];
-  declaredPaymentsReceived?: Payment[];
 };
 
 export const generatePdf = async ({
-  dueDate,
-  reason,
-  payer,
-  payee,
-  expectedAmount,
-  requestId,
-  declaredPaymentsSent = [],
-  declaredPaymentsReceived = [],
+  requestId
 }: generatePdfParams) => {
   const pdfDoc = await PDFDocument.create();
   const page = pdfDoc.addPage([400, 700]);
 
   const { width, height } = page.getSize();
 
-  page.drawText(`WaveIn Details`, {
-    x: 50,
+  const requestClient = new RequestNetwork({
+    nodeConnectionConfig: { 
+      baseURL: "https://sepolia.gateway.request.network/",
+    },
+  });
+
+  const request = await requestClient.fromRequestId(requestId);
+  const requestData = await request.getData();
+
+  const declaredPaymentsReceived = [];
+  for (let i = 0; i < requestData.extensionsData.length; i++) {
+    if (requestData.extensionsData[i].action === 'declareReceivedPayment') {
+      const amount = requestData.extensionsData[i].parameters.amount;
+      const note = requestData.extensionsData[i].parameters.note;
+      declaredPaymentsReceived.push({ amount, note });
+    }
+  }
+
+  let declaredPaymentSent;
+
+  for (let i = 0; i < requestData.extensionsData.length; i++) {
+    if (requestData.extensionsData[i].action === 'declareSentPayment') {
+      declaredPaymentSent = {
+        amount: requestData.extensionsData[i].parameters.amount,
+        note: requestData.extensionsData[i].parameters.note
+      };
+    }
+  }
+
+  const requestDataReceived = {
+    dueDate: requestData.contentData.dueDate,
+    reason: requestData.contentData.reason,
+    payee: requestData.payee?.value as string,
+    payer: requestData.payer?.value as string,
+    expectedAmount: requestData.expectedAmount,
+    requestId: requestData.requestId,
+    currencyAddress: requestData.currencyInfo.value,
+    expectedFlowRate: requestData.extensionsData[0].parameters.expectedFlowRate,
+    declaredPaymentsReceived: declaredPaymentsReceived,
+    declaredPaymentSent: declaredPaymentSent
+  };
+
+  console.log("------request data received------");
+  console.log(requestDataReceived);
+
+  const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+
+  // Header with gradient text
+  page.drawText('WaveIn Request Details', {
+    x: 25,
     y: height - 50,
-    size: 24,
+    size: 30,
     color: rgb(0, 0, 0),
+    font: font,
   });
 
   page.drawText(`Request ID: ${requestId}`, {
-    x: 50,
+    x: 25,
     y: height - 75,
     size: 8,
     color: rgb(0, 0, 0),
+    font: font,
   });
 
-  page.drawText(`Reason: ${reason}`, {
-    x: 50,
+  page.drawText(`Reason: ${requestDataReceived.reason}`, {
+    x: 25,
     y: height - 100,
     size: 12,
     color: rgb(0, 0, 0),
+    font: font,
   });
 
-  page.drawText(`Due Date: ${dueDate}`, {
-    x: 50,
+  page.drawText(`Due Date: ${requestDataReceived.dueDate}`, {
+    x: 25,
     y: height - 130,
     size: 12,
     color: rgb(0, 0, 0),
+    font: font,
   });
 
-  page.drawText(`Expected Amount: ${expectedAmount} USDC`, {
-    x: 50,
+  page.drawText(`Expected Amount: ${requestDataReceived.expectedAmount} USDC`, {
+    x: 25,
     y: height - 160,
     size: 12,
     color: rgb(0, 0, 0),
+    font: font,
   });
 
-  page.drawText(`Payer: ${payer}`, {
-    x: 50,
+  page.drawText(`Payer: ${requestDataReceived.payer}`, {
+    x: 25,
     y: height - 190,
     size: 12,
     color: rgb(0, 0, 0),
+    font: font,
   });
 
-  page.drawText(`Payee: ${payee}`, {
-    x: 50,
+  page.drawText(`Payee: ${requestDataReceived.payee}`, {
+    x: 25,
     y: height - 220,
     size: 12,
     color: rgb(0, 0, 0),
+    font: font,
   });
 
   // Declared Payments Sent
   page.drawText(`Declared Payments Sent:`, {
-    x: 50,
+    x: 25,
     y: height - 250,
     size: 12,
     color: rgb(0, 0, 0),
+    font: font,
   });
 
-  let currentY = height - 270;
-
-  (declaredPaymentsSent as Payment[]).forEach((payment, index) => {
-    page.drawText(`- Date: ${payment.date}, Amount: ${payment.amount} USDC`, {
-      x: 50,
-      y: currentY - (index * 20),
-      size: 8,
+  if (declaredPaymentSent) {
+    page.drawText(`${declaredPaymentSent.amount} , ${declaredPaymentSent.note}`, {
+      x: 25,
+      y: height - 270,
+      size: 10,
       color: rgb(0, 0, 0),
+      font: font,
     });
-  });
-
-  currentY -= declaredPaymentsSent.length * 20;
+  }
 
   // Declared Payments Received
   page.drawText(`Declared Payments Received:`, {
-    x: 50,
-    y: currentY - 30,
+    x: 25,
+    y: height - 300,
     size: 12,
     color: rgb(0, 0, 0),
+    font: font,
   });
 
-  currentY -= 50;
+  let yOffset = height - 320;
 
-  (declaredPaymentsReceived as Payment[]).forEach((payment, index) => {
-    page.drawText(`- Date: ${payment.date}, Amount: ${payment.amount} USDC`, {
-      x: 50,
-      y: currentY - (index * 20),
-      size: 8,
-      color: rgb(0, 0, 0),
+  if (requestDataReceived.declaredPaymentsReceived.length > 0) {
+    requestDataReceived.declaredPaymentsReceived.forEach(payment => {
+      page.drawText(`Amount: ${payment.amount}, Note: ${payment.note}`, {
+        x: 25,
+        y: yOffset,
+        size: 10,
+        color: rgb(0, 0, 0),
+        font: font,
+      });
+      yOffset -= 20;
     });
-  });
-
-  currentY -= declaredPaymentsReceived.length * 20 + 20;
-
-  // Calculate total sent amount
-  const totalSent = (declaredPaymentsSent as Payment[]).reduce((acc, payment) => acc + payment.amount, 0);
-
-  // Outstanding amount
-  page.drawText(`Outstanding amount: ${expectedAmount - totalSent} USDC`, {
-    x: 50,
-    y: currentY - 30,
-    size: 12,
-    color: rgb(0, 0, 0),
-  });
+  }
 
   const pdfBytes = await pdfDoc.save();
   return pdfBytes;

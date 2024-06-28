@@ -15,23 +15,14 @@ type generatePdfParams = {
 
 
 const DownloadInvoicePdf = ({ 
-    dueDate, reason, payer, payee, expectedAmount, requestId 
+    requestId
  }
 : generatePdfParams) => {
   const handleDownloadPdf = async () => {
 
 
 
-    const pdfBytes = await generatePdf({ 
-        dueDate, reason, payer, payee, expectedAmount, requestId,    declaredPaymentsSent: [
-          { date: "2024-06-01", amount: 200 },
-          { date: "2024-06-15", amount: 300 },
-        ], 
-        declaredPaymentsReceived: [
-          { date: "2024-06-05", amount: 100 },
-          { date: "2024-06-20", amount: 150 },
-        ],
-     });
+    const pdfBytes = await generatePdf({requestId});
     const blob = new Blob([pdfBytes], { type: 'application/pdf' });
     saveAs(blob, 'wavein-details.pdf');
   };
