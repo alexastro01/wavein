@@ -16,6 +16,7 @@ import { WaveInData } from "@/types/types";
 import FlowingBalance from "./FlowingBalance";
 import { useAccount } from "wagmi";
 import UnwrapUSDCX from "./UnwrapUSDCX";
+import DownloadInvoicePdf from "./DownloadInvoicePdf";
 
 export function WaveInDetailsDrawer({
   dueDate,
@@ -70,11 +71,23 @@ export function WaveInDetailsDrawer({
               </div>
             </div>
             <p>
-              <strong>Request ID:</strong>
+              <strong>Download PDF</strong>
             </p>
 
             {/* COPY TO CLIPBOARD COMPONENT */}
             {/* INVOICE DOWNLOAD PDF */}
+
+            <DownloadInvoicePdf
+            dueDate={dueDate}
+            expectedAmount={Number(expectedAmount)}
+            requestId={requestId}
+    
+            reason={reason}
+            payee={payee}
+            payer={payer}
+
+
+            />
           </div>
           <DrawerFooter>
             {address === payee && (
