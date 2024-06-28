@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import FlowingBalance from "./FlowingBalance";
 import Address from "./Address";
 import { AddressStreamingCard } from "./AddressStreamingCard";
@@ -31,12 +31,22 @@ const WaveInView = ({
   expectedFlowRate,
 }: WaveInData) => {
 
+  const [unwrapSuccess, setUnWrapSuccess] = React.useState(false);
+  const [isUnwrapLoading, setIsUnwrapLoading] = React.useState(false);
+
   const { data: balance } = useReadContract({
     address: USDCX_CONTRACT_ADDRESS_SEPOLIA as `0x${string}`,
     abi: usdcxAbi,
     functionName: 'balanceOf',
     args: [payee as `0x${string}`],
+    
   })
+
+  useEffect(() => {
+    if (unwrapSuccess) {
+      setUnWrapSuccess(false);
+    }
+   }, [unwrapSuccess, balance]);
 
   return (
     <div className="flex flex-col items-center p-4 mt-8 space-y-4">
@@ -65,6 +75,8 @@ const WaveInView = ({
         payee={payee}
         payer={payer}
         balance={balance as bigint}
+
+
       />
      
     </div>

@@ -14,6 +14,20 @@ export const usdcxAbi = [
     type: "function",
   },
   {
+    constant: false,
+    inputs: [
+      {
+        name: "value",
+        type: "uint256",
+      },
+    ],
+    name: "downgrade",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     "constant": false,
     "inputs": [
         {

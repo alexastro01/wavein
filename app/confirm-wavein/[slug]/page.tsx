@@ -32,7 +32,7 @@ export default function Page({ params }: { params: { slug: string } }) {
           const requestData = request.getData();
 
          console.log(requestData)
-
+  
 
          const requestDataReceived: WaveInConfirmationData = {
            dueDate: requestData.contentData.dueDate,

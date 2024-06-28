@@ -49,7 +49,7 @@ const WrapAndExecuteStreamParent = ({
         </DialogDescription>
       </DialogHeader>
       {step === 0 && <ExecuteWrap setStep={setStep} expectedAmount={expectedAmount} />}
-      {step === 1 && <StartStream setStep={setStep} expectedAmount={expectedAmount} payee={payee} expectedFlowRate={expectedFlowRate} />}
+      {step === 1 && <StartStream setStep={setStep} expectedAmount={expectedAmount} payee={payee} expectedFlowRate={expectedFlowRate} requestId={requestId} />}
     </DialogContent>
   );
 };

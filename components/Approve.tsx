@@ -22,6 +22,13 @@ const Approve = ({expectedAmount}: ApproveProps) => {
         })
 
 
+
+        useEffect(() => {
+          console.log(isLoading)
+          console.log(isConfirmed);
+        }, [isLoading, isConfirmed])
+
+        
     async function ApproveTokens() {
 
 
