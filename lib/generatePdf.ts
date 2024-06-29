@@ -135,7 +135,7 @@ export const generatePdf = async ({
   });
 
   if (declaredPaymentSent) {
-    page.drawText(`${declaredPaymentSent.amount} , ${declaredPaymentSent.note}`, {
+    page.drawText(`Amount: ${declaredPaymentSent.amount} , Date: ${declaredPaymentSent.note}`, {
       x: 25,
       y: height - 270,
       size: 10,
@@ -157,7 +157,7 @@ export const generatePdf = async ({
 
   if (requestDataReceived.declaredPaymentsReceived.length > 0) {
     requestDataReceived.declaredPaymentsReceived.forEach(payment => {
-      page.drawText(`Amount: ${payment.amount}, Note: ${payment.note}`, {
+      page.drawText(`Amount: ${payment.amount}, Date: ${payment.note}`, {
         x: 25,
         y: yOffset,
         size: 10,
@@ -167,6 +167,29 @@ export const generatePdf = async ({
       yOffset -= 20;
     });
   }
+
+  
+
+  function calculateTotalPaymentReceived(declaredPaymentsReceived: Payment[]) {
+    let total = 0;
+    declaredPaymentsReceived.forEach(payment => {
+      total += payment.amount;
+    });
+    return total;
+  }
+
+  const totalPaymentsReceived = calculateTotalPaymentReceived(declaredPaymentsReceived as any);
+
+  const outstandingAmount =  Number(requestDataReceived.expectedAmount) - totalPaymentsReceived;
+
+    // Outstanding Amount
+    page.drawText(`Outstanding Amount: ${outstandingAmount} USDC`, {
+      x: 25,
+      y: yOffset - 20,
+      size: 12,
+      color: rgb(0, 0, 0),
+      font: font,
+    });
 
   const pdfBytes = await pdfDoc.save();
   return pdfBytes;

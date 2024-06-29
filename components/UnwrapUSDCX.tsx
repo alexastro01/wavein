@@ -52,7 +52,7 @@ const UnwrapUSDCX = ({ usdcxBalance, requestId }: UnwrapUSDCXProps) => {
 
     await request.declareReceivedPayment(
       amount.toString(),
-      `Amount received:  ${amount}`,
+      `${new Date().toISOString()}`,
       {
         type: TYPE.ETHEREUM_ADDRESS,
         value: address as `0x${string}`,

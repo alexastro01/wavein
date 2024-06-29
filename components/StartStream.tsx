@@ -53,7 +53,7 @@ const StartStream = ({
       ETHEREUM_SMART_CONTRACT = "ethereumSmartContract"
   }
 
-    await request.declareSentPayment(expectedAmount.toString(), `Initialized stream of amount ${expectedAmount}`, {
+    await request.declareSentPayment(expectedAmount.toString(), `${new Date().toISOString()}`, {
       type: TYPE.ETHEREUM_ADDRESS,
       value: address as `0x${string}`,
     } );
