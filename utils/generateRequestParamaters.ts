@@ -69,6 +69,7 @@ export function generateRequestParameters({
     contentData: {
       reason: reason,
       dueDate: dueDate,
+      RequestType: 'wavein'
     },
     
     // The identity that signs the request, either payee or payer identity.
