@@ -1,5 +1,6 @@
 import { RequestNetwork } from '@requestnetwork/request-client.js';
 import { NextResponse } from 'next/server';
+import { IRequestDataWithEvents } from '@requestnetwork/request-client.js/dist/types';
 
 export async function GET(request: Request) {
   try {
@@ -31,14 +32,26 @@ export async function GET(request: Request) {
 
       console.log('All request data:', requestDatas);
 
-      // Filter the requests by payee.value equal to the provided address
+      // Filter the requests by payee.value equal to the provided address and RequestType 'wavein'
       const filteredRequests = requestDatas
         .filter(request => request.payee?.value === address)
         .filter(request => request.contentData?.RequestType === 'wavein');
 
       console.log('Filtered request data:', filteredRequests);
 
-      return NextResponse.json({ status: 'success', data: filteredRequests });
+      // Calculate the total expected amount
+      const totalExpectedAmount = filteredRequests.reduce((total, request) => {
+        const expectedAmount = parseFloat(request.expectedAmount as string || '0'); // parse the expectedAmount to a number
+        return total + expectedAmount;
+      }, 0);
+
+      console.log('Total expected amount:', totalExpectedAmount);
+
+      return NextResponse.json({
+        status: 'success',
+        data: filteredRequests,
+        totalExpectedAmount: totalExpectedAmount
+      });
     } catch (error) {
       console.error('Error fetching request data:', error);
       return NextResponse.json({ status: 'error', message: 'Error fetching request data' }, { status: 500 });
