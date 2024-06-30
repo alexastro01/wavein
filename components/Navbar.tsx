@@ -20,6 +20,7 @@ import { Menu } from "lucide-react";
 
 import { LogoIcon } from "./Icons";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import Image from "next/image";
 
 interface RouteProps {
   href: string;
@@ -50,7 +51,7 @@ export const Navbar = () => {
           href="/"
           className="font-bold text-xl flex items-center"
         >
-          <LogoIcon  /> {/* Adjust size as needed */}
+          <Image src="/logo.jpg" width={40} height={40} alt="wavein logo" className="mr-2 rounded-2xl" /> {/* Adjust size as needed */}
           WaveIn
         </a>
 
