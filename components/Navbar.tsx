@@ -33,7 +33,7 @@ const routeList: RouteProps[] = [
   },
   {
     href: "/dashboard",
-    label: "Dashboard",
+    label: "Freelancer Dashboard",
   },
 
 ];

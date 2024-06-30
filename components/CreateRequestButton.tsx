@@ -99,7 +99,7 @@ const CreateRequestButton = ({
 
     console.log(confirmedRequestData.requestId);
       
-    setLinkState(`http://localhost:3000/confirm-wavein/${confirmedRequestData.requestId}`)
+    setLinkState(`/confirm-wavein/${confirmedRequestData.requestId}`)
     setIsConfirmed(true)
 
 
