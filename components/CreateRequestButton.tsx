@@ -99,7 +99,7 @@ const CreateRequestButton = ({
 
     console.log(confirmedRequestData.requestId);
       
-    setLinkState(`/confirm-wavein/${confirmedRequestData.requestId}`)
+    setLinkState(`https://wavein.vercel.app/confirm-wavein/${confirmedRequestData.requestId}`)
     setIsConfirmed(true)
 
 

@@ -2,6 +2,7 @@ import { Button } from "./ui/button";
 import { buttonVariants } from "./ui/button";
 import { HeroCards } from "./HeroCards";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
 
 export const Hero = () => {
   return (
@@ -28,11 +29,12 @@ export const Hero = () => {
         </p>
 
         <div className="space-y-4 md:space-y-0 md:space-x-4">
+          <Link href="/create-wavein">
           <Button className="w-full md:w-1/3">Get Started</Button>
-
+          </Link>
           <a
             rel="noreferrer noopener"
-            href="https://github.com/leoMirandaa/shadcn-landing-page.git"
+            href="https://github.com/alexastro01/wavein"
             target="_blank"
             className={`w-full md:w-1/3 ${buttonVariants({
               variant: "outline",
