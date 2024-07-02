@@ -61,6 +61,7 @@ export function generateRequestParameters({
         paymentAddress: payeeIdentity,
         refundAddress: '0x0000000000000000000000000000000000000003',
         salt: 'ea3bc7caf64110ca',
+        
       },
     },
     
