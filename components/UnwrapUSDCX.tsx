@@ -24,6 +24,9 @@ const UnwrapUSDCX = ({ usdcxBalance, requestId }: UnwrapUSDCXProps) => {
   const [amount, setAmount] = React.useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('````USDCX BALANCE`````')
+
+    console.log(usdcxBalance)
     setAmount(e.target.value);
   };
 
@@ -79,10 +82,13 @@ const UnwrapUSDCX = ({ usdcxBalance, requestId }: UnwrapUSDCXProps) => {
     });
 
   useEffect(() => {
+    console.log('````USDCX BALANCE`````')
+    console.log(usdcxBalance)
     if (isConfirmed) {
         alert("Transaction success");
     }
-  }, [isConfirmed]);
+    
+  }, []);
 
   return (
     <div>
@@ -94,7 +100,6 @@ const UnwrapUSDCX = ({ usdcxBalance, requestId }: UnwrapUSDCXProps) => {
       <DrawerClose asChild>
         <Button
           disabled={
-            parseFloat(amount) > usdcxBalance ||
             amount === "" ||
             parseFloat(amount) <= 0 ||
             isConfirming

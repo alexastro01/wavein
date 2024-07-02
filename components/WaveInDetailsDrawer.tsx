@@ -94,7 +94,7 @@ export function WaveInDetailsDrawer({
             {address === payee && (
               <UnwrapUSDCX
                 requestId={requestId}
-                usdcxBalance={Number(currentBalance) / 10 ** 18}
+                usdcxBalance={currentBalance}
 
               />
             )}

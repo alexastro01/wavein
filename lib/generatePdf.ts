@@ -173,12 +173,14 @@ export const generatePdf = async ({
   function calculateTotalPaymentReceived(declaredPaymentsReceived: Payment[]) {
     let total = 0;
     declaredPaymentsReceived.forEach(payment => {
-      total += payment.amount;
+      total += Number(payment.amount);
     });
     return total;
   }
 
   const totalPaymentsReceived = calculateTotalPaymentReceived(declaredPaymentsReceived as any);
+  console.log('Total Payments Received: ')
+  console.log(totalPaymentsReceived)
 
   const outstandingAmount =  Number(requestDataReceived.expectedAmount) - totalPaymentsReceived;
 
