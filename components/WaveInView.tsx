@@ -19,6 +19,7 @@ import { WaveInDetailsDrawer } from "./WaveInDetailsDrawer";
 import { useReadContract } from "wagmi";
 import { usdcxAbi } from "@/abi/USDCx";
 import { USDCX_CONTRACT_ADDRESS_SEPOLIA } from "@/utils/constants";
+import { parseEther } from "viem";
 
 const WaveInView = ({
   dueDate,
@@ -29,24 +30,21 @@ const WaveInView = ({
   requestId,
   currencyAddress,
   expectedFlowRate,
+  currentBalance
 }: WaveInData) => {
 
   const [unwrapSuccess, setUnWrapSuccess] = React.useState(false);
   const [isUnwrapLoading, setIsUnwrapLoading] = React.useState(false);
 
-  const { data: balance } = useReadContract({
-    address: USDCX_CONTRACT_ADDRESS_SEPOLIA as `0x${string}`,
-    abi: usdcxAbi,
-    functionName: 'balanceOf',
-    args: [payee as `0x${string}`],
-    
-  })
+
 
   useEffect(() => {
     if (unwrapSuccess) {
       setUnWrapSuccess(false);
     }
-   }, [unwrapSuccess, balance]);
+    console.log(`----Current balance in WaveinView.tsx----`)
+    console.log(currentBalance)
+   }, [unwrapSuccess, currentBalance]);
 
   return (
     <div className="flex flex-col items-center p-4 mt-8 space-y-4">
@@ -74,7 +72,8 @@ const WaveInView = ({
         reason={reason}
         payee={payee}
         payer={payer}
-        balance={balance as bigint}
+        balance={parseEther(currentBalance.toString())}
+        currentBalance={currentBalance}
 
 
       />

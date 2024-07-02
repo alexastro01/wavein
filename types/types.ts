@@ -34,4 +34,5 @@ export type WaveInData = {
     expectedAmount: string | number,
     requestId: string,
     expectedFlowRate: string
+    currentBalance: number
 }

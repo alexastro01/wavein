@@ -17,6 +17,7 @@ import FlowingBalance from "./FlowingBalance";
 import { useAccount } from "wagmi";
 import UnwrapUSDCX from "./UnwrapUSDCX";
 import DownloadInvoicePdf from "./DownloadInvoicePdf";
+import { parseEther } from "viem";
 
 export function WaveInDetailsDrawer({
   dueDate,
@@ -27,7 +28,7 @@ export function WaveInDetailsDrawer({
   reason,
   payee,
   payer,
-  balance,
+  currentBalance
 
 }: WaveInData & {
   balance: bigint;
@@ -63,7 +64,7 @@ export function WaveInDetailsDrawer({
               <strong>Receiver's Balance:</strong>
               <div className="flex justify-center mt-2 w-[100px] m-auto">
            <FlowingBalance
-                  startingBalance={balance}
+                  startingBalance={parseEther(currentBalance.toString())}
                   startingBalanceDate={new Date()}
                   flowRate={BigInt(expectedFlowRate)}
                 /> 
@@ -93,7 +94,7 @@ export function WaveInDetailsDrawer({
             {address === payee && (
               <UnwrapUSDCX
                 requestId={requestId}
-                usdcxBalance={Number(balance) / 10 ** 18}
+                usdcxBalance={Number(currentBalance) / 10 ** 18}
 
               />
             )}
